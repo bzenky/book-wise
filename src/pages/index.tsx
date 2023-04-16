@@ -1,6 +1,9 @@
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 
 export default function Home() {
+  const session = useSession()
+
   return (
     <>
       <Head>
@@ -10,7 +13,20 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>Znk</h1>
+      <div>
+        <h1>Znk</h1>
+
+        <div>
+          <button onClick={() => signIn('google')}>Teste Login Google</button>
+          <button onClick={() => signOut()}>Teste Logout</button>
+        </div>
+
+        <div>
+          <button onClick={() => signIn('github')}>Teste Login Github</button>
+          <button onClick={() => signOut()}>Teste Logout</button>
+        </div>
+        <p>{JSON.stringify(session)}</p>
+      </div>
     </>
   )
 }
