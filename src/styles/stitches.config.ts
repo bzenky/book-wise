@@ -74,10 +74,12 @@ export const {
     },
 
     radii: {
-      xs: '2.5px',
-      sm: '5px',
+      xs: '4px',
+      sm: '6px',
+      base: '8px',
       md: '10px',
-      lg: '20px',
+      lg: '12px',
+      xl: '14px',
       full: '99999px',
     },
   },

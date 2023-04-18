@@ -25,5 +25,6 @@ export const globalStyles = globalCss({
 
   body: {
     '-webkit-font-smoothing': 'antialiased',
+    backgroundColor: "$gray800"
   }
 })
