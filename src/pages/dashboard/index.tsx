@@ -1,6 +1,9 @@
+import { signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 
 export default function Dashboard() {
+  const session = useSession()
+
   return (
     <>
       <Head>
@@ -10,7 +13,13 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1>dash</h1>
+      <h1 style={{ color: 'white' }}>dash</h1>
+      <pre style={{ color: 'white' }}>{JSON.stringify(session.data, null, 2)}</pre>
+      <button
+        onClick={() => signOut({ callbackUrl: '/' })}
+      >
+        Desloga
+      </button>
     </>
   )
 }

@@ -1,7 +1,7 @@
-import { globalStyles } from '@/styles/globals'
 import type { AppProps } from 'next/app'
 import { Nunito } from 'next/font/google'
 import { SessionProvider } from "next-auth/react"
+import { globalStyles } from '@/styles/globals'
 
 const nunito = Nunito({
   weight: ['400', '700'],

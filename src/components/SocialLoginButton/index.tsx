@@ -1,5 +1,6 @@
 
 import { useRouter } from "next/router"
+import { signIn } from "next-auth/react"
 import { Button, Icon } from "./styles"
 
 interface ButtonProps {
@@ -12,6 +13,8 @@ export function SocialLoginButton({ provider }: ButtonProps) {
   function handleAuth() {
     if (!provider) {
       router.push('/dashboard')
+    } else {
+      signIn(provider, { callbackUrl: '/dashboard' })
     }
   }
 
