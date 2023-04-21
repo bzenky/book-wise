@@ -1,7 +1,9 @@
 import { signOut, useSession } from 'next-auth/react'
+import { NextPageWithLayout } from '../_app'
 import Head from 'next/head'
+import { DefaultLayout } from '@/layouts/DefaultLayout'
 
-export default function Dashboard() {
+const Dashboard: NextPageWithLayout = () => {
   const session = useSession()
 
   return (
@@ -23,3 +25,14 @@ export default function Dashboard() {
     </>
   )
 }
+
+Dashboard.getLayout = (page) => {
+  return (
+    <>
+      <DefaultLayout />
+      {page}
+    </>
+  )
+}
+
+export default Dashboard

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { SocialLoginButton } from '@/components/SocialLoginButton'
-import { ButtonWrapper, HeroImage, HomeWrapper, SocialLoginContainer, SocialLoginWrapper, TextWrapper } from './styles'
+import { ButtonWrapper, HeroImage, HomeWrapper, SocialLoginContainer, SocialLoginWrapper, TextWrapper } from '@/styles/pages/home'
 
 export default function Home() {
   return (

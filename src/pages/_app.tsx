@@ -1,7 +1,17 @@
+import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import { Nunito } from 'next/font/google'
+import { ReactElement, ReactNode } from 'react'
 import { SessionProvider } from "next-auth/react"
 import { globalStyles } from '@/styles/globals'
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
 
 const nunito = Nunito({
   weight: ['400', '700'],
@@ -13,13 +23,15 @@ globalStyles()
 export default function App({
   Component,
   pageProps: { session, ...pageProps }
-}: AppProps) {
+}: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
   return (
     <SessionProvider session={session}>
       <div
         className={nunito.className}
       >
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
       </div>
     </SessionProvider>
   )
