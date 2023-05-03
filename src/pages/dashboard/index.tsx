@@ -1,6 +1,7 @@
-import { signOut, useSession } from 'next-auth/react'
-import { NextPageWithLayout } from '../_app'
 import Head from 'next/head'
+import { useSession } from 'next-auth/react'
+import { NextPageWithLayout } from '../_app'
+import { Navbar } from '@/components/Navbar'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 
 const Dashboard: NextPageWithLayout = () => {
@@ -15,23 +16,24 @@ const Dashboard: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 style={{ color: 'white' }}>dash</h1>
-      <pre style={{ color: 'white' }}>{JSON.stringify(session.data, null, 2)}</pre>
-      <button
-        onClick={() => signOut({ callbackUrl: '/' })}
-      >
-        Desloga
-      </button>
+      <Navbar />
+
+      <main>
+        conteudo
+      </main>
+
+      <aside>
+        sidebar
+      </aside>
     </>
   )
 }
 
 Dashboard.getLayout = (page) => {
   return (
-    <>
-      <DefaultLayout />
+    <DefaultLayout>
       {page}
-    </>
+    </DefaultLayout>
   )
 }
 

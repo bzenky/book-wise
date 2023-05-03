@@ -1,9 +1,14 @@
+import { ReactNode } from "react"
 import { Container } from "./styles"
 
-export const DefaultLayout = () => {
+interface LayoutProps {
+  children: ReactNode
+}
+
+export const DefaultLayout = ({ children }: LayoutProps) => {
   return (
     <Container>
-      <p>znk</p>
+      {children}
     </Container>
   )
 }
