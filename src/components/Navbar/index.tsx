@@ -1,11 +1,13 @@
 import { signOut, useSession } from 'next-auth/react'
 import { LogOut, LogIn } from 'lucide-react'
-import { Aside, LogoutButton, NavLink, Navigation } from './styles'
+import { Avatar } from '../Avatar'
 import { theme } from '@/styles/stitches.config'
+import { Aside, AuthButton, NavLink, Navigation } from './styles'
 
 export function Navbar() {
   const session = useSession()
   const isAuthenticated = session.status === 'authenticated'
+  const userFirstName = session.data?.user.name.split(" ")[0]
 
   function handleLogin() {
     if (isAuthenticated) {
@@ -32,11 +34,15 @@ export function Navbar() {
         )}
       </Navigation>
 
-      <LogoutButton onClick={handleLogin}>
+      <AuthButton onClick={handleLogin}>
         {isAuthenticated
           ? (
             <>
-              Logout
+              <Avatar
+                avatarUrl={session.data.user.avatar_url}
+                name={session.data.user.name}
+              />
+              {userFirstName}
               <LogOut size={20} color={String(theme.colors.green100)} />
             </>
           )
@@ -47,7 +53,7 @@ export function Navbar() {
             </>
           )
         }
-      </LogoutButton>
+      </AuthButton>
     </Aside>
   )
 }

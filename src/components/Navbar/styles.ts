@@ -35,7 +35,7 @@ export const NavLink = styled(Link, {
   height: '42px'
 })
 
-export const LogoutButton = styled('button', {
+export const AuthButton = styled('button', {
   all: 'unset',
   display: 'flex',
   alignItems: 'center',
