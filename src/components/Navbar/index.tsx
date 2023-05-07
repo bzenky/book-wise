@@ -1,8 +1,9 @@
 import { signOut, useSession } from 'next-auth/react'
-import { LogOut, LogIn } from 'lucide-react'
+import { Compass, LineChart, LogOut, LogIn, User } from 'lucide-react'
 import { Avatar } from '../Avatar'
+import { Aside, AuthButton, Navigation } from './styles'
+import { NavLink } from '../NavLink'
 import { theme } from '@/styles/stitches.config'
-import { Aside, AuthButton, NavLink, Navigation } from './styles'
 
 export function Navbar() {
   const session = useSession()
@@ -21,14 +22,17 @@ export function Navbar() {
       <img src="/logo.svg" alt="Logo" />
 
       <Navigation>
-        <NavLink href=''>
+        <NavLink href='/dashboard'>
+          <LineChart size={20} color={String(theme.colors.green100)} />
           Início
         </NavLink>
-        <NavLink href=''>
+        <NavLink href='/explore'>
+          <Compass size={20} color={String(theme.colors.green100)} />
           Explorar
         </NavLink>
         {isAuthenticated && (
-          <NavLink href=''>
+          <NavLink href='/profile'>
+            <User size={20} color={String(theme.colors.green100)} />
             Perfil
           </NavLink>
         )}

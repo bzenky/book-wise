@@ -1,5 +1,4 @@
 import { styled } from "@stitches/react"
-import Link from "next/link"
 
 export const Aside = styled('aside', {
   display: 'flex',
@@ -11,7 +10,6 @@ export const Aside = styled('aside', {
   padding: '24px',
   backgroundImage: 'url(/nav-background.png)',
   borderRadius: '$lg',
-  fontWeight: 'bold',
   fontSize: '$md'
 })
 
@@ -28,13 +26,6 @@ export const Navigation = styled('nav', {
   marginTop: '64px'
 })
 
-export const NavLink = styled(Link, {
-  color: '$gray400',
-  fontSize: '$md',
-  textDecoration: 'none',
-  height: '42px'
-})
-
 export const AuthButton = styled('button', {
   all: 'unset',
   display: 'flex',
@@ -42,6 +33,7 @@ export const AuthButton = styled('button', {
   justifyContent: 'center',
   gap: '12px',
   color: '$gray200',
+  fontWeight: 'bold',
   cursor: 'pointer',
-  marginTop: 'auto'
+  marginTop: 'auto',
 })
