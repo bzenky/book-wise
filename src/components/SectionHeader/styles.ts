@@ -4,6 +4,7 @@ export const Container = styled('div', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
+  height: '42px',
 
   '& > span': {
     color: '$gray100',
