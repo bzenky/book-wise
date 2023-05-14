@@ -14,24 +14,59 @@ interface PopularBooksProps {
   author: string
   averageRating: number
   cover_url: string
-  created_at: string
   id: string
   name: string
-  summary: string
-  total_pages: number
 }
 
-interface PopularBooksResponse {
+interface UserProps {
+  avatar_url: string
+  name: string
+}
+
+interface BookProps {
+  name: string
+  author: string
+  summary: string
+  cover_url: string
+}
+
+interface PopularBooksResponseProps {
   popularBooksWithAverageRating: PopularBooksProps[]
 }
 
+export interface RatingProps {
+  author: string
+  id: string
+  rate: number
+  created_at: string
+  description: string
+  user: UserProps
+  book: BookProps
+}
+
+interface LastRatingsResponseProps {
+  ratings: RatingProps[]
+}
+
 const Dashboard: NextPageWithLayout = () => {
-  async function fetchPopularBooks() {
-    const response = await api.get<PopularBooksResponse>('/books/popular')
+  async function fetchLatestRatings() {
+    const response = await api.get<LastRatingsResponseProps>('/ratings/latest')
       .then(response => response.data)
 
     return response
   }
+
+  async function fetchPopularBooks() {
+    const response = await api.get<PopularBooksResponseProps>('/books/popular')
+      .then(response => response.data)
+
+    return response
+  }
+
+  const latestRatings = useQuery({
+    queryKey: ['latestRatings'],
+    queryFn: fetchLatestRatings
+  })
 
   const popularBooks = useQuery({
     queryKey: ['popularBooks'],
@@ -58,10 +93,14 @@ const Dashboard: NextPageWithLayout = () => {
             <SectionHeader text='Avaliações recentes' />
 
             <RatingCardWrapper>
-              <RatingCard />
-              <RatingCard />
-              <RatingCard />
-              <RatingCard />
+              {latestRatings.data?.ratings.map((rating) => {
+                return (
+                  <RatingCard
+                    key={rating.id}
+                    rating={rating}
+                  />
+                )
+              })}
             </RatingCardWrapper>
           </RatingWrapper>
 
