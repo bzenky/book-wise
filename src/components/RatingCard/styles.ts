@@ -8,10 +8,6 @@ export const Card = styled('div', {
   width: '608px',
   height: '280px',
   borderRadius: '$base',
-
-  '& + &': {
-    marginTop: '$3'
-  }
 })
 
 export const Header = styled('div', {

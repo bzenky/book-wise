@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import { NextPageWithLayout } from '../_app'
 import { RatingCard } from '@/components/RatingCard'
+import { SectionHeader } from '@/components/SectionHeader'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { LineChart } from 'lucide-react'
 import { theme } from '@/styles/stitches.config'
-import { Container, Title } from './styles'
+import { Container, Main, RatingCardWrapper, RatingWrapper, Title } from './styles'
 
 const Dashboard: NextPageWithLayout = () => {
   return (
@@ -17,25 +18,27 @@ const Dashboard: NextPageWithLayout = () => {
       </Head>
 
       <Container>
+        <Title>
+          <LineChart size={20} color={String(theme.colors.green100)} />
+          Início
+        </Title>
 
-        <main>
-          <Title>
-            <LineChart size={20} color={String(theme.colors.green100)} />
-            Início
-          </Title>
+        <Main>
+          <RatingWrapper>
+            <SectionHeader text='Avaliações recentes' />
 
-          <span>Avaliações mais recentes</span>
+            <RatingCardWrapper>
+              <RatingCard />
+              <RatingCard />
+              <RatingCard />
+              <RatingCard />
+            </RatingCardWrapper>
+          </RatingWrapper>
 
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-          <RatingCard />
-        </main>
-
-        <aside>
-          sidebar
-        </aside>
-
+          <aside style={{ background: '#e7e7e7' }}>
+            sidebar
+          </aside>
+        </Main>
       </Container>
     </>
   )
