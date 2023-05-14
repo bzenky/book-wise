@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import { NextPageWithLayout } from '../_app'
+import { api } from '@/lib/axios'
+import { useQuery } from '@tanstack/react-query'
 import { RatingCard } from '@/components/RatingCard'
 import { RatingCardMinimal } from '@/components/RatingCardMinimal'
 import { SectionHeader } from '@/components/SectionHeader'
@@ -8,7 +10,34 @@ import { LineChart } from 'lucide-react'
 import { theme } from '@/styles/stitches.config'
 import { AsideWrapper, Container, Main, RatingCardWrapper, RatingWrapper, Title } from './styles'
 
+interface PopularBooksProps {
+  author: string
+  averageRating: number
+  cover_url: string
+  created_at: string
+  id: string
+  name: string
+  summary: string
+  total_pages: number
+}
+
+interface PopularBooksResponse {
+  popularBooksWithAverageRating: PopularBooksProps[]
+}
+
 const Dashboard: NextPageWithLayout = () => {
+  async function fetchPopularBooks() {
+    const response = await api.get<PopularBooksResponse>('/books/popular')
+      .then(response => response.data)
+
+    return response
+  }
+
+  const popularBooks = useQuery({
+    queryKey: ['popularBooks'],
+    queryFn: fetchPopularBooks
+  })
+
   return (
     <>
       <Head>
@@ -44,10 +73,17 @@ const Dashboard: NextPageWithLayout = () => {
             />
 
             <RatingCardWrapper>
-              <RatingCardMinimal />
-              <RatingCardMinimal />
-              <RatingCardMinimal />
-              <RatingCardMinimal />
+              {popularBooks.data?.popularBooksWithAverageRating.map((book) => {
+                return (
+                  <RatingCardMinimal
+                    key={book.id}
+                    author={book.author}
+                    averageRating={book.averageRating}
+                    cover={book.cover_url}
+                    name={book.name}
+                  />
+                )
+              })}
             </RatingCardWrapper>
           </AsideWrapper>
         </Main>

@@ -1,27 +1,35 @@
-import { Star } from "lucide-react"
-import { BookCover, BookInfo, BookInfoWrapper, Card, RatingWrapper } from "./styles"
-import { theme } from "@/styles/stitches.config"
+import { renderRating } from "@/utils/renderRating"
+import {
+  BookCover,
+  BookInfo,
+  BookInfoWrapper,
+  Card,
+  RatingWrapper
+} from "./styles"
 
-export function RatingCardMinimal() {
+interface BookProps {
+  author: string
+  averageRating: number
+  cover: string
+  name: string
+}
+
+export function RatingCardMinimal({ author, averageRating, cover, name }: BookProps) {
   return (
     <Card>
       <BookCover
-        src="https://m.media-amazon.com/images/I/519kRFUvDOL._SX356_BO1,204,203,200_.jpg"
-        alt="Capa do livro"
+        src={cover}
+        alt={`Capa do livro - ${name}`}
       />
 
       <BookInfoWrapper>
         <BookInfo>
-          <h5>Pai Rico, Pai Pobre</h5>
-          <span>Robert T. Kiyosaki</span>
+          <h5>{name}</h5>
+          <span>{author}</span>
         </BookInfo>
 
         <RatingWrapper>
-          <Star size={18} color={String(theme.colors.purple100)} fill={String(theme.colors.purple100)} />
-          <Star size={18} color={String(theme.colors.purple100)} fill={String(theme.colors.purple100)} />
-          <Star size={18} color={String(theme.colors.purple100)} fill={String(theme.colors.purple100)} />
-          <Star size={18} color={String(theme.colors.purple100)} fill={String(theme.colors.purple100)} />
-          <Star size={18} color={String(theme.colors.purple100)} />
+          {renderRating(averageRating)}
         </RatingWrapper>
       </BookInfoWrapper>
     </Card>
