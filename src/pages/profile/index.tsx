@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import { NextPageWithLayout } from '../_app'
-import { Navbar } from '@/components/Navbar'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 
 const Profile: NextPageWithLayout = () => {
@@ -12,8 +11,6 @@ const Profile: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Navbar />
 
       <main>
         conteudo

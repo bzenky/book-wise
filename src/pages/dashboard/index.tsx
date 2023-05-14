@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import { useSession } from 'next-auth/react'
 import { NextPageWithLayout } from '../_app'
-import { Navbar } from '@/components/Navbar'
+import { RatingCard } from '@/components/RatingCard'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
+import { LineChart } from 'lucide-react'
+import { theme } from '@/styles/stitches.config'
+import { Container, Title } from './styles'
 
 const Dashboard: NextPageWithLayout = () => {
-  const session = useSession()
-
   return (
     <>
       <Head>
@@ -16,15 +16,27 @@ const Dashboard: NextPageWithLayout = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Navbar />
+      <Container>
 
-      <main>
-        conteudo
-      </main>
+        <main>
+          <Title>
+            <LineChart size={20} color={String(theme.colors.green100)} />
+            Início
+          </Title>
 
-      <aside>
-        sidebar
-      </aside>
+          <span>Avaliações mais recentes</span>
+
+          <RatingCard />
+          <RatingCard />
+          <RatingCard />
+          <RatingCard />
+        </main>
+
+        <aside>
+          sidebar
+        </aside>
+
+      </Container>
     </>
   )
 }

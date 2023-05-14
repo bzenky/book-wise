@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 import { Compass, LineChart, LogOut, LogIn, User } from 'lucide-react'
 import { Avatar } from '../Avatar'
@@ -7,6 +8,7 @@ import { theme } from '@/styles/stitches.config'
 
 export function Navbar() {
   const session = useSession()
+  const router = useRouter()
   const isAuthenticated = session.status === 'authenticated'
   const userFirstName = session.data?.user.name.split(" ")[0]
 
@@ -15,6 +17,8 @@ export function Navbar() {
       signOut({ callbackUrl: '/' })
       return
     }
+
+    router.push('/')
   }
 
   return (
