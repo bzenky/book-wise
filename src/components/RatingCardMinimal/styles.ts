@@ -6,22 +6,26 @@ export const Card = styled('div', {
   padding: '$4 $5',
   gap: '$5',
   width: '100%',
-  height: '130px',
   backgroundColor: '$gray700',
   borderRadius: '$base',
 })
 
 export const BookCover = styled('img', {
-  width: '64px',
-  height: '94px',
-  borderRadius: '$xs'
+  width: '108px',
+  height: '152px',
+  borderRadius: '$xs',
+
+  '&[data-variant="small"]': {
+    width: '64px',
+    height: '94px',
+  }
 })
 
 export const BookInfoWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  height: '98px'
+  height: '100%'
 })
 
 export const BookInfo = styled('div', {

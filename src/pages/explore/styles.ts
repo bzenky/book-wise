@@ -63,3 +63,38 @@ export const SearchIcon = styled(Search, {
   right: '20px',
   transform: 'translateY(-50%)',
 })
+
+export const FilterTagWrapper = styled('div', {
+  display: 'flex',
+  gap: '$3',
+  marginTop: '40px',
+  overflowX: 'auto',
+})
+
+export const FilterTag = styled('button', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '34px',
+  padding: '$1 $4',
+  border: '1px solid $purple100',
+  borderRadius: '$full',
+  color: '$purple100',
+  background: '$gray800',
+  cursor: 'pointer',
+  transition: 'all 0.2s ease-in-out',
+
+  '&[data-active="true"]': {
+    color: '$gray100',
+    borderColor: '$purple200',
+    backgroundColor: '$purple200',
+  }
+})
+
+export const BookGridContainer = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  gridColumnGap: '$5',
+  gridRowGap: '$5',
+  marginTop: '48px',
+})

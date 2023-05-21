@@ -120,6 +120,7 @@ const Dashboard: NextPageWithLayout = () => {
                     averageRating={book.averageRating}
                     cover={book.cover_url}
                     name={book.name}
+                    variant='small'
                   />
                 )
               })}
