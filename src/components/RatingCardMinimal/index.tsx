@@ -12,14 +12,22 @@ interface BookProps {
   averageRating: number
   cover: string
   name: string
+  variant: 'small' | 'base'
 }
 
-export function RatingCardMinimal({ author, averageRating, cover, name }: BookProps) {
+export function RatingCardMinimal({
+  author,
+  averageRating,
+  cover,
+  name,
+  variant
+}: BookProps) {
   return (
     <Card>
       <BookCover
         src={cover}
         alt={`Capa do livro - ${name}`}
+        data-variant={variant}
       />
 
       <BookInfoWrapper>

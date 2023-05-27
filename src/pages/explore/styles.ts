@@ -7,7 +7,6 @@ export const Container = styled('div', {
   padding: '20px 0',
   width: '100%',
   maxWidth: '998px',
-  maxHeight: 'calc(100vh - 40px)',
   margin: '0 auto',
   borderRadius: '$lg',
 })
@@ -68,7 +67,6 @@ export const FilterTagWrapper = styled('div', {
   display: 'flex',
   gap: '$3',
   marginTop: '40px',
-  overflowX: 'auto',
 })
 
 export const FilterTag = styled('button', {
@@ -91,10 +89,19 @@ export const FilterTag = styled('button', {
   }
 })
 
+export const Main = styled('div', {
+  marginTop: '48px',
+  maxHeight: 'calc(100vh - 230px)',
+  overflowY: 'auto',
+
+  '&::-webkit-scrollbar': {
+    display: 'none',
+  },
+})
+
 export const BookGridContainer = styled('div', {
   display: 'grid',
   gridTemplateColumns: '1fr 1fr 1fr',
   gridColumnGap: '$5',
   gridRowGap: '$5',
-  marginTop: '48px',
 })

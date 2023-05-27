@@ -1,14 +1,28 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { NextPageWithLayout } from '../_app'
+import { useQuery } from '@tanstack/react-query'
+import { Compass } from 'lucide-react'
+import { api } from '@/lib/axios'
 import { RatingCardMinimal } from '@/components/RatingCardMinimal'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
-import { Compass } from 'lucide-react'
 import { theme } from '@/styles/stitches.config'
-import { BookGridContainer, Container, FilterTag, FilterTagWrapper, SearchIcon, SearchInput, SearchWrapper, Title, TitleWrapper } from './styles'
+import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, SearchIcon, SearchInput, SearchWrapper, Title, TitleWrapper } from './styles'
+
+interface BookProps {
+  author: string
+  averageRating: number
+  cover_url: string
+  created_at: string
+  id: string
+  name: string
+  summary: string
+  total_pages: number
+}
 
 const Explore: NextPageWithLayout = () => {
   const [focused, setFocused] = useState(false)
+  const tags = ['Tudo', 'Computação', 'Educação', 'Fantasia', 'Ficção Científica', 'Horror', 'HQs', 'Suspense']
 
   function handleFocusIconColor() {
     if (focused) return String(theme.colors.green200)
@@ -16,11 +30,23 @@ const Explore: NextPageWithLayout = () => {
     return String(theme.colors.gray500)
   }
 
+  async function fetchBooks() {
+    const response = await api.get<BookProps[]>('/books')
+      .then(response => response.data)
+
+    return response
+  }
+
+  const books = useQuery({
+    queryKey: ['books'],
+    queryFn: fetchBooks
+  })
+
   return (
     <>
       <Head>
         <title>Explore | BookWise</title>
-        <meta name="description" content="Welcome to BookWise, take your book and stay wise." />
+        <meta name="description" content="Explore our books in BookWise, take your book and leave your feedback." />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -47,82 +73,31 @@ const Explore: NextPageWithLayout = () => {
         </TitleWrapper>
 
         <FilterTagWrapper>
-          <FilterTag data-active={true}>
-            Tudo
-          </FilterTag>
-          <FilterTag>
-            Computação
-          </FilterTag>
-          <FilterTag>
-            Educação
-          </FilterTag>
-          <FilterTag>
-            Fantasia
-          </FilterTag>
-          <FilterTag>
-            Ficção Científica
-          </FilterTag>
-          <FilterTag>
-            Horror
-          </FilterTag>
-          <FilterTag>
-            HQs
-          </FilterTag>
-          <FilterTag>
-            Suspense
-          </FilterTag>
+          {tags.map(tag => {
+            return (
+              <FilterTag key={tag}>
+                {tag}
+              </FilterTag>
+            )
+          })}
         </FilterTagWrapper>
 
-        <BookGridContainer>
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-          <RatingCardMinimal
-            key='xxt'
-            author='John Wayne'
-            averageRating={4.5}
-            cover='https://m.media-amazon.com/images/I/91TDPDzWPVL._AC_SL1500_.jpg'
-            name='The Book of John'
-            variant='base'
-          />
-        </BookGridContainer>
+        <Main>
+          <BookGridContainer>
+            {books.data?.map(book => {
+              return (
+                <RatingCardMinimal
+                  key={book.id}
+                  author={book.author}
+                  averageRating={book.averageRating}
+                  cover={book.cover_url}
+                  name={book.name}
+                  variant='base'
+                />
+              )
+            })}
+          </BookGridContainer>
+        </Main>
       </Container>
     </>
   )
