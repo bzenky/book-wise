@@ -3,10 +3,13 @@ import { useState } from 'react'
 import { NextPageWithLayout } from '../_app'
 import { useQuery } from '@tanstack/react-query'
 import { Compass } from 'lucide-react'
+import { useKeenSlider } from 'keen-slider/react'
 import { api } from '@/lib/axios'
 import { RatingCardMinimal } from '@/components/RatingCardMinimal'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { theme } from '@/styles/stitches.config'
+import { filterTags } from '@/utils/filterTags'
+import 'keen-slider/keen-slider.min.css'
 import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, SearchIcon, SearchInput, SearchWrapper, Title, TitleWrapper } from './styles'
 
 interface BookProps {
@@ -22,7 +25,25 @@ interface BookProps {
 
 const Explore: NextPageWithLayout = () => {
   const [focused, setFocused] = useState(false)
-  const tags = ['Tudo', 'Computação', 'Educação', 'Fantasia', 'Ficção Científica', 'Horror', 'HQs', 'Suspense']
+  const [activeTagFilters, setActiveTagFilters] = useState<string[]>([])
+  const [sliderRef] = useKeenSlider({
+    loop: false,
+    slides: {
+      perView: 7.5,
+      spacing: 12
+    },
+    dragSpeed: 3,
+  })
+
+  function handleTagFilter(tag: string) {
+    if (activeTagFilters.includes(tag)) {
+      const newActiveTagFilters = activeTagFilters.filter(activeTagFilter => activeTagFilter !== tag)
+
+      setActiveTagFilters(newActiveTagFilters)
+    } else {
+      setActiveTagFilters([...activeTagFilters, tag])
+    }
+  }
 
   function handleFocusIconColor() {
     if (focused) return String(theme.colors.green200)
@@ -72,10 +93,15 @@ const Explore: NextPageWithLayout = () => {
           </SearchWrapper>
         </TitleWrapper>
 
-        <FilterTagWrapper>
-          {tags.map(tag => {
+        <FilterTagWrapper className="keen-slider" ref={sliderRef}>
+          {filterTags.map(tag => {
             return (
-              <FilterTag key={tag}>
+              <FilterTag
+                key={tag}
+                data-active={activeTagFilters.includes(tag)}
+                onClick={() => handleTagFilter(tag)}
+                className="keen-slider__slide"
+              >
                 {tag}
               </FilterTag>
             )

@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { NextPageWithLayout } from '../_app'
 import { api } from '@/lib/axios'
 import { useQuery } from '@tanstack/react-query'
@@ -49,6 +50,8 @@ interface LastRatingsResponseProps {
 }
 
 const Dashboard: NextPageWithLayout = () => {
+  const router = useRouter()
+
   async function fetchLatestRatings() {
     const response = await api.get<LastRatingsResponseProps>('/ratings/latest')
       .then(response => response.data)
@@ -109,6 +112,7 @@ const Dashboard: NextPageWithLayout = () => {
               text='Livros Populares'
               hasAction
               actionText='Ver todos'
+              actionFunction={() => router.push('/explore')}
             />
 
             <RatingCardWrapper>

@@ -64,8 +64,6 @@ export const SearchIcon = styled(Search, {
 })
 
 export const FilterTagWrapper = styled('div', {
-  display: 'flex',
-  gap: '$3',
   marginTop: '40px',
 })
 

@@ -15,6 +15,7 @@ export default async function handler(
   const books = await prisma.book.findMany({
     include: {
       ratings: true,
+      categories: true,
     },
   })
 
@@ -30,15 +31,26 @@ export default async function handler(
     }
   })
 
-  const booksWithAverageRating = books.map(book => {
+  const booksCategories = await prisma.category.groupBy({
+    by: ['id', 'name'],
+    where: {
+      id: {
+        in: books.map(book => book.categories.map(category => category.categoryId)).flat()
+      }
+    }
+  })
+
+  const booksWithAverageCategory = books.map(book => {
     const bookAverageRating = booksAverageRating.find(averageRating => averageRating.book_id === book.id)
+    const bookCategory = booksCategories.find(category => category.id === book.categories.map(category => category.categoryId).flat()[0])
     const { ratings, ...bookInfo } = book
 
     return {
       ...bookInfo,
       averageRating: bookAverageRating?._avg?.rate,
+      category: bookCategory?.name
     }
   })
 
-  return res.json(booksWithAverageRating)
+  return res.json(booksWithAverageCategory)
 }
