@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { FormEvent, useRef, useState } from 'react'
 import { NextPageWithLayout } from '../_app'
 import { useQuery } from '@tanstack/react-query'
 import { Compass } from 'lucide-react'
@@ -15,6 +15,7 @@ import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, Search
 interface BookProps {
   author: string
   averageRating: number
+  category: string
   cover_url: string
   created_at: string
   id: string
@@ -25,6 +26,8 @@ interface BookProps {
 
 const Explore: NextPageWithLayout = () => {
   const [focused, setFocused] = useState(false)
+  const [booksList, setBooksList] = useState<BookProps[]>([])
+  const searchInput = useRef<HTMLInputElement>(null)
   const [activeTagFilters, setActiveTagFilters] = useState<string[]>([])
   const [sliderRef] = useKeenSlider({
     loop: false,
@@ -36,12 +39,35 @@ const Explore: NextPageWithLayout = () => {
   })
 
   function handleTagFilter(tag: string) {
+    if (tag === 'Tudo') {
+      if (!activeTagFilters.includes('Tudo')) {
+        setActiveTagFilters(filterTags)
+      } else {
+        setActiveTagFilters([])
+      }
+
+      setBooksList(books.data!)
+      return
+    }
+
     if (activeTagFilters.includes(tag)) {
+      let updatedList: BookProps[]
       const newActiveTagFilters = activeTagFilters.filter(activeTagFilter => activeTagFilter !== tag)
 
+      if (activeTagFilters.length === 1) {
+        updatedList = books.data!.filter(book => !newActiveTagFilters.includes(book.category))
+      } else {
+        updatedList = books.data!.filter(book => newActiveTagFilters.includes(book.category))
+      }
+
+      setBooksList(updatedList)
       setActiveTagFilters(newActiveTagFilters)
     } else {
-      setActiveTagFilters([...activeTagFilters, tag])
+      const newActiveTagFilters = [...activeTagFilters, tag]
+      const updatedList = books.data!.filter(book => newActiveTagFilters.includes(book.category))
+
+      setActiveTagFilters(newActiveTagFilters)
+      setBooksList(updatedList)
     }
   }
 
@@ -51,10 +77,28 @@ const Explore: NextPageWithLayout = () => {
     return String(theme.colors.gray500)
   }
 
+  function handleSearch(event: FormEvent) {
+    event.preventDefault()
+
+    const searchValue = searchInput.current?.value
+
+    if (searchValue) {
+      const updatedList = books.data!.filter(book => book.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchValue.toLowerCase()))
+
+      setBooksList(updatedList)
+    } else {
+      const updatedList = books.data!.filter(book => activeTagFilters.includes(book.category))
+
+      setBooksList(updatedList)
+    }
+  }
+
   async function fetchBooks() {
     const response = await api.get<BookProps[]>('/books')
       .then(response => response.data)
 
+    setBooksList(response)
     return response
   }
 
@@ -79,8 +123,9 @@ const Explore: NextPageWithLayout = () => {
             Explorar
           </Title>
 
-          <SearchWrapper>
+          <SearchWrapper onSubmit={(event) => handleSearch(event)}>
             <SearchInput
+              ref={searchInput}
               placeholder="Buscar livro ou autor"
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
@@ -89,6 +134,7 @@ const Explore: NextPageWithLayout = () => {
             <SearchIcon
               size={20}
               color={handleFocusIconColor()}
+              onClick={handleSearch}
             />
           </SearchWrapper>
         </TitleWrapper>
@@ -110,7 +156,7 @@ const Explore: NextPageWithLayout = () => {
 
         <Main>
           <BookGridContainer>
-            {books.data?.map(book => {
+            {booksList.map(book => {
               return (
                 <RatingCardMinimal
                   key={book.id}

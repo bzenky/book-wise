@@ -25,7 +25,7 @@ export const Title = styled('h2', {
   color: '$gray100',
 })
 
-export const SearchWrapper = styled('div', {
+export const SearchWrapper = styled('form', {
   position: 'relative',
   width: '433px',
 
@@ -61,6 +61,7 @@ export const SearchIcon = styled(Search, {
   top: '50%',
   right: '20px',
   transform: 'translateY(-50%)',
+  cursor: 'pointer'
 })
 
 export const FilterTagWrapper = styled('div', {
