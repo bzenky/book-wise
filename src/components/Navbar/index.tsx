@@ -49,6 +49,7 @@ export function Navbar() {
               <Avatar
                 avatarUrl={session.data.user.avatar_url}
                 name={session.data.user.name}
+                size='sm'
               />
               {userFirstName}
               <LogOut size={20} color={String(theme.colors.green100)} />

@@ -27,9 +27,22 @@ export const AvatarRoot = styled(Avatar.Root, {
   justifyContent: 'center',
   overflow: 'hidden',
   userSelect: 'none',
-  width: '32px',
-  height: '32px',
+  width: '52px',
+  height: '52px',
   borderRadius: '100%',
+
+  variants: {
+    size: {
+      sm: {
+        width: '32px',
+        height: '32px',
+      },
+      base: {
+        width: '72px',
+        height: '72px',
+      },
+    },
+  },
 })
 
 export const AvatarImage = styled(Avatar.Image, {

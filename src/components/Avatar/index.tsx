@@ -8,14 +8,15 @@ import {
 interface AvatarProps {
   avatarUrl: string
   name: string
+  size: 'sm' | 'base'
 }
 
-export function Avatar({ avatarUrl, name }: AvatarProps) {
+export function Avatar({ avatarUrl, name, size }: AvatarProps) {
   const nameFallback = name.split(" ").map((n) => n[0]).join("").slice(0, 2)
 
   return (
     <AvatarContainer>
-      <AvatarRoot>
+      <AvatarRoot size={size}>
         <AvatarImage
           src={avatarUrl}
           alt={name}
