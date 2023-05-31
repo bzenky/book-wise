@@ -1,16 +1,17 @@
 import Head from 'next/head'
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { NextPageWithLayout } from '../_app'
 import { useQuery } from '@tanstack/react-query'
 import { Compass } from 'lucide-react'
 import { useKeenSlider } from 'keen-slider/react'
 import { api } from '@/lib/axios'
 import { RatingCardMinimal } from '@/components/RatingCardMinimal'
+import { CustomForm, SearchInput } from '@/components/SearchInput'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { theme } from '@/styles/stitches.config'
 import { filterTags } from '@/utils/filterTags'
 import 'keen-slider/keen-slider.min.css'
-import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, SearchIcon, SearchInput, SearchWrapper, Title, TitleWrapper } from './styles'
+import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, Title, TitleWrapper } from './styles'
 
 interface BookProps {
   author: string
@@ -25,9 +26,7 @@ interface BookProps {
 }
 
 const Explore: NextPageWithLayout = () => {
-  const [focused, setFocused] = useState(false)
   const [booksList, setBooksList] = useState<BookProps[]>([])
-  const searchInput = useRef<HTMLInputElement>(null)
   const [activeTagFilters, setActiveTagFilters] = useState<string[]>([])
   const [sliderRef] = useKeenSlider({
     loop: false,
@@ -71,16 +70,9 @@ const Explore: NextPageWithLayout = () => {
     }
   }
 
-  function handleFocusIconColor() {
-    if (focused) return String(theme.colors.green200)
-
-    return String(theme.colors.gray500)
-  }
-
-  function handleSearch(event: FormEvent) {
+  function handleSearch(event: FormEvent<CustomForm>) {
     event.preventDefault()
-
-    const searchValue = searchInput.current?.value
+    const searchValue = event.currentTarget.elements.search.value
 
     if (searchValue) {
       const updatedList = books.data!.filter(book => book.name.toLowerCase().includes(searchValue.toLowerCase()) ||
@@ -88,6 +80,11 @@ const Explore: NextPageWithLayout = () => {
 
       setBooksList(updatedList)
     } else {
+      if (activeTagFilters.includes('Tudo') || !activeTagFilters.length) {
+        setBooksList(books.data!)
+        return
+      }
+
       const updatedList = books.data!.filter(book => activeTagFilters.includes(book.category))
 
       setBooksList(updatedList)
@@ -123,20 +120,9 @@ const Explore: NextPageWithLayout = () => {
             Explorar
           </Title>
 
-          <SearchWrapper onSubmit={(event) => handleSearch(event)}>
-            <SearchInput
-              ref={searchInput}
-              placeholder="Buscar livro ou autor"
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-            />
-
-            <SearchIcon
-              size={20}
-              color={handleFocusIconColor()}
-              onClick={handleSearch}
-            />
-          </SearchWrapper>
+          <SearchInput
+            handleSearch={handleSearch}
+          />
         </TitleWrapper>
 
         <FilterTagWrapper className="keen-slider" ref={sliderRef}>
