@@ -64,3 +64,7 @@ export const BookGridContainer = styled('div', {
   gridColumnGap: '$5',
   gridRowGap: '$5',
 })
+
+export const SearchWrapper = styled('div', {
+  width: '434px'
+})

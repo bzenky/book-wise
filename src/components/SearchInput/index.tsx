@@ -13,9 +13,10 @@ export interface CustomForm extends HTMLFormElement {
 
 interface SearchInputProps {
   handleSearch: (event: FormEvent<CustomForm>) => void
+  placeholder?: string
 }
 
-export function SearchInput({ handleSearch }: SearchInputProps) {
+export function SearchInput({ handleSearch, placeholder }: SearchInputProps) {
   const [focused, setFocused] = useState(false)
 
   function handleFocusIconColor() {
@@ -27,7 +28,7 @@ export function SearchInput({ handleSearch }: SearchInputProps) {
   return (
     <SearchWrapper onSubmit={(event: FormEvent<CustomForm>) => handleSearch(event)}>
       <Input
-        placeholder="Buscar livro ou autor"
+        placeholder={placeholder}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
         name="search"

@@ -11,7 +11,7 @@ import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { theme } from '@/styles/stitches.config'
 import { filterTags } from '@/utils/filterTags'
 import 'keen-slider/keen-slider.min.css'
-import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, Title, TitleWrapper } from './styles'
+import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, SearchWrapper, Title, TitleWrapper } from './styles'
 
 interface BookProps {
   author: string
@@ -120,9 +120,12 @@ const Explore: NextPageWithLayout = () => {
             Explorar
           </Title>
 
-          <SearchInput
-            handleSearch={handleSearch}
-          />
+          <SearchWrapper>
+            <SearchInput
+              placeholder='Buscar livro ou autor'
+              handleSearch={handleSearch}
+            />
+          </SearchWrapper>
         </TitleWrapper>
 
         <FilterTagWrapper className="keen-slider" ref={sliderRef}>
