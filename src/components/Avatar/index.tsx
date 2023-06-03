@@ -8,7 +8,7 @@ import {
 interface AvatarProps {
   avatarUrl: string
   name: string
-  size: 'sm' | 'base'
+  size?: 'sm' | 'base'
 }
 
 export function Avatar({ avatarUrl, name, size }: AvatarProps) {

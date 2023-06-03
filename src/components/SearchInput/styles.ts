@@ -2,7 +2,7 @@ import { styled } from "@/styles/stitches.config"
 
 export const SearchWrapper = styled('form', {
   position: 'relative',
-  width: '433px',
+  width: '100%',
 
   '&:focus': {
     '& svg': {
