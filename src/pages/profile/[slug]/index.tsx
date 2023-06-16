@@ -7,8 +7,29 @@ import { theme } from '@/styles/stitches.config'
 import { Container, LastRatingsWrapper, Main, Title, TitleWrapper } from './styles'
 import { SearchInput } from '@/components/SearchInput'
 import { ProfileRatingCard } from '@/components/ProfileRatingCard'
+import { useRouter } from 'next/router'
+import { api } from '@/lib/axios'
+import { useQuery } from '@tanstack/react-query'
 
 const Profile: NextPageWithLayout = () => {
+  const router = useRouter()
+
+  const { slug: userId } = router.query
+
+  async function fetchUserData() {
+    const response = await api.get(`/users?id=${userId}`)
+      .then(response => response.data)
+
+    return response
+  }
+
+  const userData = useQuery({
+    queryKey: ['user', userId],
+    queryFn: fetchUserData
+  })
+
+  console.log(userData.data)
+
   return (
     <>
       <Head>
