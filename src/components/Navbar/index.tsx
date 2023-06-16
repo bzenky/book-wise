@@ -11,6 +11,7 @@ export function Navbar() {
   const router = useRouter()
   const isAuthenticated = session.status === 'authenticated'
   const userFirstName = session.data?.user.name.split(" ")[0]
+  const userId = session.data?.user.id
 
   function handleLogin() {
     if (isAuthenticated) {
@@ -35,7 +36,7 @@ export function Navbar() {
           Explorar
         </NavLink>
         {isAuthenticated && (
-          <NavLink href='/profile'>
+          <NavLink href={`/profile/${userId}`}>
             <User size={20} color={String(theme.colors.green100)} />
             Perfil
           </NavLink>
