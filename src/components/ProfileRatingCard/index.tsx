@@ -1,15 +1,21 @@
 import { renderRating } from "@/utils/renderRating"
+import { Ratings } from "@/pages/profile/[slug]"
+import { dateDistanceToNow } from "@/utils/dateDistanceToNow"
 import { BookInfoWrapper, Card, Container, Header, RatingWrapper } from "./styles"
 
-export function ProfileRatingCard() {
+interface ProfileRatingProps {
+  rating: Ratings
+}
+
+export function ProfileRatingCard({ rating }: ProfileRatingProps) {
   return (
     <Container>
-      <span>Há 2 dias</span>
+      <span>{dateDistanceToNow(new Date(rating.created_at))}</span>
 
       <Card>
         <Header>
           <img
-            src="/images/books/codigo-limpo.png"
+            src={rating.book.cover_url}
             width="98"
             height="134"
             alt="Livro"
@@ -17,17 +23,17 @@ export function ProfileRatingCard() {
 
           <BookInfoWrapper>
             <div>
-              <h6>Código Limpo</h6>
-              <span>Robert C. Martin</span>
+              <h6>{rating.book.name}</h6>
+              <span>{rating.book.author}</span>
             </div>
 
             <RatingWrapper>
-              {renderRating(4)}
+              {renderRating(rating.rate)}
             </RatingWrapper>
           </BookInfoWrapper>
         </Header>
 
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis consequatur dicta dolor beatae quas nobis eos rerum in sunt laborum necessitatibus quam, temporibus voluptatem laudantium doloremque recusandae eaque eum deleniti?</p>
+        <p>{rating.description}</p>
       </Card>
     </Container>
   )

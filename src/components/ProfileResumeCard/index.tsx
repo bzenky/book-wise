@@ -3,19 +3,33 @@ import { theme } from "@/styles/stitches.config"
 import { Avatar } from "../Avatar"
 import { Container, Divider, InfoDataWrapper, InfoWrapper, ProfileDataWrapper, UserNameInfoWrapper, UserPersonalInfoWrapper } from "./styles"
 
-export function ProfileResumeCard() {
+interface ProfileProps {
+  profileData: {
+    avatar_url: string | undefined
+    name: string | undefined
+    memberSince: string | undefined
+    pagesRead: number | undefined
+    booksRated: number | undefined
+    authorsRead: number | undefined
+    categoryMostRead: string | undefined
+  }
+}
+
+export function ProfileResumeCard({ profileData }: ProfileProps) {
+  const memberSinceYear = new Date(profileData.memberSince ?? new Date()).getFullYear()
+
   return (
     <Container>
       <UserPersonalInfoWrapper>
         <Avatar
-          avatarUrl="https://www.github.com/bzenky.png"
-          name="Bruno Zenky"
+          avatarUrl={profileData.avatar_url ?? ''}
+          name={profileData.name ?? ''}
           size="base"
         />
 
         <UserNameInfoWrapper>
-          <h3>Zenky</h3>
-          <span>membro desde 2019</span>
+          <h3>{profileData.name}</h3>
+          <span>membro desde {memberSinceYear}</span>
         </UserNameInfoWrapper>
       </UserPersonalInfoWrapper>
 
@@ -26,7 +40,7 @@ export function ProfileResumeCard() {
           <BookOpen size={32} color={String(theme.colors.green100)} />
 
           <InfoDataWrapper>
-            <h6>853</h6>
+            <h6>{profileData.pagesRead}</h6>
             <span>Páginas lidas</span>
           </InfoDataWrapper>
         </InfoWrapper>
@@ -35,7 +49,7 @@ export function ProfileResumeCard() {
           <Bookmark size={32} color={String(theme.colors.green100)} />
 
           <InfoDataWrapper>
-            <h6>3</h6>
+            <h6>{profileData.booksRated}</h6>
             <span>Livros Avaliados</span>
           </InfoDataWrapper>
         </InfoWrapper>
@@ -44,8 +58,8 @@ export function ProfileResumeCard() {
           <UserCheck size={32} color={String(theme.colors.green100)} />
 
           <InfoDataWrapper>
-            <h6>3</h6>
-            <span>Autores mais lidos</span>
+            <h6>{profileData.authorsRead}</h6>
+            <span>Autores lidos</span>
           </InfoDataWrapper>
         </InfoWrapper>
 
@@ -53,7 +67,7 @@ export function ProfileResumeCard() {
           <Bookmark size={32} color={String(theme.colors.green100)} />
 
           <InfoDataWrapper>
-            <h6>Horror</h6>
+            <h6>{profileData.categoryMostRead}</h6>
             <span>Categoria mais lida</span>
           </InfoDataWrapper>
         </InfoWrapper>
