@@ -16,6 +16,7 @@ import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, Search
 interface BookProps {
   author: string
   averageRating: number
+  countRating: number
   category: string
   cover_url: string
   created_at: string
@@ -104,6 +105,8 @@ const Explore: NextPageWithLayout = () => {
     queryFn: fetchBooks
   })
 
+  console.log('data', books.data)
+
   return (
     <>
       <Head>
@@ -151,8 +154,11 @@ const Explore: NextPageWithLayout = () => {
                   key={book.id}
                   author={book.author}
                   averageRating={book.averageRating}
+                  countRating={book.countRating}
+                  categories={book.category}
                   cover={book.cover_url}
                   name={book.name}
+                  totalPages={book.total_pages}
                   variant='base'
                 />
               )

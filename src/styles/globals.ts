@@ -7,6 +7,7 @@ export const globalStyles = globalCss({
     boxSizing: 'border-box',
     scrollbarWidth: 'auto',
     scrollbarColor: '#d7d4d8 #ffffff',
+    fontFamily: '$default',
 
     '&::-webkit-scrollbar': {
       width: '14px'

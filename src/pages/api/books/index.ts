@@ -46,6 +46,7 @@ export default async function handler(
     return {
       ...bookInfo,
       averageRating: bookAverageRating?._avg?.rate,
+      countRating: ratings.length,
       category: bookCategory?.name
     }
   })

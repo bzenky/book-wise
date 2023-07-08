@@ -8,6 +8,7 @@ export const Card = styled('div', {
   width: '100%',
   backgroundColor: '$gray700',
   borderRadius: '$base',
+  cursor: 'pointer',
 })
 
 export const BookCover = styled('img', {
