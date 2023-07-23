@@ -10,6 +10,7 @@ import { ModalLogin } from '../ModalLogin'
 import { BookCard, BookInfo, BookRatingCard, BookRatingHeader, BookRatingTitleWrapper, BookTitleWrapper, Close, Content, Footer, FooterItem, Overlay, RatingStarWrapper, RatingTitleWrapper, RatingWrapper } from './styles'
 import { Avatar } from '../Avatar'
 import { dateDistanceToNow } from '@/utils/dateDistanceToNow'
+import { ReviewCard } from '../ReviewCard'
 
 interface Modal {
   children: ReactNode
@@ -17,6 +18,7 @@ interface Modal {
 }
 
 export function ModalBook({ children, data }: Modal) {
+  const [showReviewFields, setShowReviewFields] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const session = useSession()
 
@@ -26,6 +28,8 @@ export function ModalBook({ children, data }: Modal) {
     if (!isAuthenticated) {
       setOpenLoginModal(true)
     } else {
+      setShowReviewFields(!showReviewFields)
+
       console.log('authed')
     }
   }
@@ -92,6 +96,12 @@ export function ModalBook({ children, data }: Modal) {
               Avaliar
             </button>
           </RatingTitleWrapper>
+
+          {showReviewFields && (
+            <ReviewCard
+              showComponent={setShowReviewFields}
+            />
+          )}
 
           <RatingWrapper>
             {data.ratings?.map(rating => {

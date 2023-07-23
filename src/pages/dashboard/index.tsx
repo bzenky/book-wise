@@ -126,7 +126,6 @@ const Dashboard: NextPageWithLayout = () => {
 
             <RatingCardWrapper>
               {popularBooks.data?.popularBooksWithAverageRating.map((book) => {
-                console.log({ book })
                 return (
                   <RatingCardMinimal
                     key={book.id}
