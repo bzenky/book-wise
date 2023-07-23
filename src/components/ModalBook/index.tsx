@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
@@ -97,16 +98,17 @@ export function ModalBook({ children, data }: Modal) {
               return (
                 <BookRatingCard key={rating.id}>
                   <BookRatingHeader>
-                    <Avatar
-                      name={rating.user.name}
-                      avatarUrl={rating.user.avatar_url}
-                      size='sm'
-                    />
-
-                    <BookRatingTitleWrapper>
-                      <strong>{rating.user.name}</strong>
-                      <span>{dateDistanceToNow(new Date(rating.created_at))}</span>
-                    </BookRatingTitleWrapper>
+                    <Link href={`/profile/${rating.user_id}`}>
+                      <Avatar
+                        name={rating.user.name}
+                        avatarUrl={rating.user.avatar_url}
+                        size='sm'
+                      />
+                      <BookRatingTitleWrapper>
+                        <strong>{rating.user.name}</strong>
+                        <span>{dateDistanceToNow(new Date(rating.created_at))}</span>
+                      </BookRatingTitleWrapper>
+                    </Link>
 
                     <RatingStarWrapper>
                       {renderRating(rating.rate)}

@@ -15,6 +15,7 @@ interface PopularBooksProps {
   author: string
   averageRating: number
   cover_url: string
+  ratings: RatingProps[]
   id: string
   name: string
 }
@@ -25,10 +26,17 @@ interface UserProps {
 }
 
 interface BookProps {
-  name: string
   author: string
-  summary: string
+  averageRating: number
+  ratings: RatingProps[]
+  countRating: number
+  category: string
   cover_url: string
+  created_at: string
+  id: string
+  name: string
+  summary: string
+  total_pages: number
 }
 
 interface PopularBooksResponseProps {
@@ -41,6 +49,7 @@ export interface RatingProps {
   rate: number
   created_at: string
   description: string
+  user_id: string
   user: UserProps
   book: BookProps
 }
@@ -117,6 +126,7 @@ const Dashboard: NextPageWithLayout = () => {
 
             <RatingCardWrapper>
               {popularBooks.data?.popularBooksWithAverageRating.map((book) => {
+                console.log({ book })
                 return (
                   <RatingCardMinimal
                     key={book.id}

@@ -24,7 +24,7 @@ export function RatingCard({ rating }: RatingCardProps) {
   return (
     <Card>
       <Header>
-        <UserWrapper>
+        <UserWrapper href={`/profile/${rating.user_id}`}>
           <Avatar
             avatarUrl={rating.user.avatar_url}
             name={rating.user.name}

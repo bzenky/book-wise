@@ -31,12 +31,23 @@ export default async function handler(
     }
   })
 
+  const users = await prisma.user.findMany({
+    orderBy: {
+      created_at: 'desc',
+    },
+  })
+
   const popularBooksWithAverageRating = popularBooks.map(book => {
     const bookAverageRating = booksAverageRating.find(averageRating => averageRating.book_id === book.id)
     const { ratings, ...bookInfo } = book
 
+    const ratingsWithUser = ratings.map(rating => {
+      return { ...rating, user: users.find(user => user?.id === rating.user_id) }
+    })
+
     return {
       ...bookInfo,
+      ratings: ratingsWithUser,
       averageRating: bookAverageRating?._avg?.rate,
     }
   })

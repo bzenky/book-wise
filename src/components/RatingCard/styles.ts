@@ -1,4 +1,5 @@
 import { styled } from "@/styles/stitches.config"
+import Link from "next/link"
 
 export const Card = styled('div', {
   display: 'flex',
@@ -16,10 +17,11 @@ export const Header = styled('div', {
   justifyContent: 'space-between',
 })
 
-export const UserWrapper = styled('div', {
+export const UserWrapper = styled(Link, {
   display: 'flex',
   alignItems: 'center',
-  gap: '$4'
+  gap: '$4',
+  textDecoration: 'none'
 })
 
 export const InfoWrapper = styled('div', {

@@ -117,6 +117,13 @@ export const BookRatingHeader = styled('div', {
   alignItems: 'center',
   gap: '16px',
   marginBottom: '20px',
+
+  '& > a': {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    textDecoration: 'none',
+  },
 })
 
 export const BookRatingTitleWrapper = styled('div', {
