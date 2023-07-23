@@ -29,7 +29,8 @@ export const Content = styled(Dialog.Content, {
   width: '100vw',
   maxWidth: '640px',
   height: '100vh',
-  padding: '64px 48px 0',
+  overflowY: 'scroll',
+  padding: '64px 48px 24px',
   animation: `${contentShow} 150ms cubic-bezier(0.16, 1, 0.3, 1)`,
   zIndex: 11,
 })
@@ -48,7 +49,6 @@ export const Close = styled(Dialog.Close, {
 export const BookCard = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  width: '564px',
   padding: '24px 32px 16px 32px',
   background: '$gray700',
   borderRadius: '$base',
@@ -83,7 +83,7 @@ export const BookTitleWrapper = styled('div', {
 export const RatingWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
-  gap: '$1',
+  gap: '$3',
 
   '& > div': {
     display: 'flex',
@@ -94,6 +94,56 @@ export const RatingWrapper = styled('div', {
     color: '$gray400',
     fontSize: '$md'
   }
+})
+
+export const BookRatingCard = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '24px',
+  gap: '20px',
+  backgroundColor: '$gray700',
+  borderRadius: '$base',
+
+  '& > p': {
+    color: '$gray300',
+    fontSize: '$sm',
+    lineHeight: '$base',
+  },
+})
+
+export const BookRatingHeader = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  gap: '16px',
+  marginBottom: '20px',
+})
+
+export const BookRatingTitleWrapper = styled('div', {
+  display: 'flex',
+  flex: 1,
+  flexDirection: 'column',
+  alignItems: 'flex-start',
+  lineHeight: '$base',
+
+  '& > strong': {
+    color: '$gray100',
+    fontSize: '$md',
+    fontWeight: '$bold',
+  },
+
+  '& > span': {
+    color: '$gray400',
+    fontSize: '$sm',
+    lineHeight: '$base',
+  }
+})
+
+export const RatingStarWrapper = styled('div', {
+  display: 'flex',
+  height: '48px',
+  alignItems: 'baseline',
+  gap: '4px'
 })
 
 export const Footer = styled('div', {

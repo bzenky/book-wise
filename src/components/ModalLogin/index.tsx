@@ -1,6 +1,8 @@
 import * as Dialog from '@radix-ui/react-dialog'
-import { ActionWrapper, Content, Overlay } from './styles'
+import { ActionWrapper, Close, Content, Overlay } from './styles'
 import { SocialLoginButton } from '../SocialLoginButton'
+import { theme } from '@/styles/stitches.config'
+import { X } from 'lucide-react'
 
 interface ModalLoginProps {
   open: boolean
@@ -20,6 +22,10 @@ export function ModalLogin({ open, setOpen }: ModalLoginProps) {
             <SocialLoginButton provider='google' />
             <SocialLoginButton provider='github' />
           </ActionWrapper>
+
+          <Close>
+            <X size={24} color={theme.colors.gray400 as unknown as string} />
+          </Close>
         </Content>
       </Dialog.Portal>
     </Dialog.Root>

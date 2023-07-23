@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Compass } from 'lucide-react'
 import { useKeenSlider } from 'keen-slider/react'
 import { api } from '@/lib/axios'
-import { RatingCardMinimal } from '@/components/RatingCardMinimal'
+import { RatingCardMinimal, RatingProps } from '@/components/RatingCardMinimal'
 import { CustomForm, SearchInput } from '@/components/SearchInput'
 import { DefaultLayout } from '@/layouts/DefaultLayout'
 import { theme } from '@/styles/stitches.config'
@@ -16,6 +16,7 @@ import { BookGridContainer, Container, FilterTag, FilterTagWrapper, Main, Search
 interface BookProps {
   author: string
   averageRating: number
+  ratings: RatingProps[]
   countRating: number
   category: string
   cover_url: string
@@ -105,8 +106,6 @@ const Explore: NextPageWithLayout = () => {
     queryFn: fetchBooks
   })
 
-  console.log('data', books.data)
-
   return (
     <>
       <Head>
@@ -154,6 +153,7 @@ const Explore: NextPageWithLayout = () => {
                   key={book.id}
                   author={book.author}
                   averageRating={book.averageRating}
+                  ratings={book.ratings}
                   countRating={book.countRating}
                   categories={book.category}
                   cover={book.cover_url}

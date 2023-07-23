@@ -22,6 +22,7 @@ export const Content = styled(Dialog.Content, {
   alignItems: 'center',
   flexDirection: 'column',
   gap: '40px',
+  borderRadius: '$lg',
 
   backgroundColor: '$gray800',
   boxShadow: 'hsl(206 22 % 7 % / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20 %)',
@@ -45,4 +46,15 @@ export const ActionWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'column',
   gap: '16px',
+})
+
+export const Close = styled(Dialog.Close, {
+  all: 'unset',
+  position: 'absolute',
+  top: '16px',
+  right: '16px',
+  width: '32px',
+  height: '32px',
+  background: 'transparent',
+  cursor: 'pointer',
 })

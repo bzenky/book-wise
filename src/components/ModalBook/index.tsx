@@ -1,12 +1,14 @@
 import { useSession } from 'next-auth/react'
 import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { BookCard, BookInfo, BookTitleWrapper, Close, Content, Footer, FooterItem, Overlay, RatingTitleWrapper, RatingWrapper } from './styles'
+import { BookOpen, Bookmark, X } from 'lucide-react'
 import { BookProps } from '../RatingCardMinimal'
 import { renderRating } from '@/utils/renderRating'
-import { BookOpen, Bookmark, X } from 'lucide-react'
 import { theme } from '@/styles/stitches.config'
 import { ModalLogin } from '../ModalLogin'
+import { BookCard, BookInfo, BookRatingCard, BookRatingHeader, BookRatingTitleWrapper, BookTitleWrapper, Close, Content, Footer, FooterItem, Overlay, RatingStarWrapper, RatingTitleWrapper, RatingWrapper } from './styles'
+import { Avatar } from '../Avatar'
+import { dateDistanceToNow } from '@/utils/dateDistanceToNow'
 
 interface Modal {
   children: ReactNode
@@ -44,9 +46,9 @@ export function ModalBook({ children, data }: Modal) {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Overlay />
+
         <Content>
           <BookCard>
-
             <header>
               <img src={data.cover} alt="Capa livro" width={172} height={242} />
               <BookInfo>
@@ -89,6 +91,33 @@ export function ModalBook({ children, data }: Modal) {
               Avaliar
             </button>
           </RatingTitleWrapper>
+
+          <RatingWrapper>
+            {data.ratings?.map(rating => {
+              return (
+                <BookRatingCard key={rating.id}>
+                  <BookRatingHeader>
+                    <Avatar
+                      name={rating.user.name}
+                      avatarUrl={rating.user.avatar_url}
+                      size='sm'
+                    />
+
+                    <BookRatingTitleWrapper>
+                      <strong>{rating.user.name}</strong>
+                      <span>{dateDistanceToNow(new Date(rating.created_at))}</span>
+                    </BookRatingTitleWrapper>
+
+                    <RatingStarWrapper>
+                      {renderRating(rating.rate)}
+                    </RatingStarWrapper>
+                  </BookRatingHeader>
+
+                  <p>{rating.description}</p>
+                </BookRatingCard>
+              )
+            })}
+          </RatingWrapper>
 
           <Close>
             <X size={24} color={theme.colors.gray400 as unknown as string} />

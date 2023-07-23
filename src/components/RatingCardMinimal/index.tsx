@@ -8,9 +8,28 @@ import {
 } from "./styles"
 import { ModalBook } from "../ModalBook"
 
+export interface UserProps {
+  id: string
+  email: string
+  name: string
+  avatar_url: string
+  created_at: string
+}
+
+export interface RatingProps {
+  id: string
+  rate: number
+  description: string
+  created_at: string
+  book_id: string
+  user_id: string
+  user: UserProps
+}
+
 export interface BookProps {
   author: string
   averageRating: number
+  ratings?: RatingProps[]
   countRating?: number
   totalPages?: number
   categories?: string
@@ -23,13 +42,14 @@ export function RatingCardMinimal({
   author,
   averageRating,
   categories,
+  ratings,
   countRating,
   totalPages,
   cover,
   name,
   variant
 }: BookProps) {
-  const data = { author, averageRating, categories, countRating, cover, name, variant, totalPages }
+  const data = { author, averageRating, categories, ratings, countRating, cover, name, variant, totalPages }
 
   return (
     <ModalBook data={data}>
