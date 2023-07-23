@@ -1,10 +1,12 @@
-import { ReactNode } from 'react'
+import { useSession } from 'next-auth/react'
+import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
-import { BookCard, BookInfo, BookTitleWrapper, Close, Content, Footer, FooterItem, Overlay, RatingWrapper } from './styles'
+import { BookCard, BookInfo, BookTitleWrapper, Close, Content, Footer, FooterItem, Overlay, RatingTitleWrapper, RatingWrapper } from './styles'
 import { BookProps } from '../RatingCardMinimal'
 import { renderRating } from '@/utils/renderRating'
 import { BookOpen, Bookmark, X } from 'lucide-react'
 import { theme } from '@/styles/stitches.config'
+import { ModalLogin } from '../ModalLogin'
 
 interface Modal {
   children: ReactNode
@@ -12,6 +14,19 @@ interface Modal {
 }
 
 export function ModalBook({ children, data }: Modal) {
+  const [openLoginModal, setOpenLoginModal] = useState(false)
+  const session = useSession()
+
+  function handleRateBook() {
+    const isAuthenticated = session.status === 'authenticated'
+
+    if (!isAuthenticated) {
+      setOpenLoginModal(true)
+    } else {
+      console.log('authed')
+    }
+  }
+
   const ratingCountText = data.countRating
     ? (
       data.countRating === 0
@@ -67,11 +82,24 @@ export function ModalBook({ children, data }: Modal) {
             </Footer>
           </BookCard>
 
+          <RatingTitleWrapper>
+            <h3>Avaliações</h3>
+
+            <button onClick={() => handleRateBook()}>
+              Avaliar
+            </button>
+          </RatingTitleWrapper>
+
           <Close>
             <X size={24} color={theme.colors.gray400 as unknown as string} />
           </Close>
         </Content>
       </Dialog.Portal>
+
+      <ModalLogin
+        open={openLoginModal}
+        setOpen={(value: boolean) => setOpenLoginModal(value)}
+      />
     </Dialog.Root>
   )
 }

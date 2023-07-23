@@ -127,3 +127,27 @@ export const FooterItem = styled('div', {
     }
   }
 })
+
+export const RatingTitleWrapper = styled('div', {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  margin: '46px 0 24px',
+
+  '& > h3': {
+    fontSize: '$sm',
+    fontWeight: '$regular',
+    color: '$gray200',
+  },
+
+  '& > button': {
+    all: 'unset',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '4px 8px',
+    fontWeight: '$bold',
+    color: '$purple100',
+    cursor: 'pointer',
+  }
+})

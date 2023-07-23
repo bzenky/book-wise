@@ -24,14 +24,14 @@ export function SocialLoginButton({ provider }: ButtonProps) {
         return (
           <>
             <Icon src="/icons/github-icon.svg" alt="Github" />
-            Faça seu login com Github
+            Entrar com Github
           </>
         )
       case 'google':
         return (
           <>
             <Icon src="/icons/google-icon.svg" alt="Google" />
-            Faça seu login com Google
+            Entrar com Google
           </>
         )
       default:
