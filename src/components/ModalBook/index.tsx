@@ -29,8 +29,6 @@ export function ModalBook({ children, data }: Modal) {
       setOpenLoginModal(true)
     } else {
       setShowReviewFields(!showReviewFields)
-
-      console.log('authed')
     }
   }
 

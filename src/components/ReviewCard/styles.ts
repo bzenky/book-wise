@@ -76,11 +76,12 @@ export const ActionButton = styled('button', {
   cursor: 'pointer',
   transition: 'all 0.2s ease-in-out',
 
-  '&:hover': {
+  '&:not(:disabled):hover': {
     backgroundColor: '$gray500',
   },
 
   '&:disabled': {
     opacity: 0.6,
+    cursor: 'not-allowed',
   }
 })
