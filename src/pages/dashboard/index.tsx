@@ -129,6 +129,7 @@ const Dashboard: NextPageWithLayout = () => {
                 return (
                   <RatingCardMinimal
                     key={book.id}
+                    id={book.id}
                     author={book.author}
                     averageRating={book.averageRating}
                     cover={book.cover_url}

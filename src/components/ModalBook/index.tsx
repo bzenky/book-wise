@@ -21,6 +21,7 @@ export function ModalBook({ children, data }: Modal) {
   const [showReviewFields, setShowReviewFields] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const session = useSession()
+  const ratingSorted = data.ratings?.sort((a, b) => b.created_at.localeCompare(a.created_at))
 
   function handleRateBook() {
     const isAuthenticated = session.status === 'authenticated'
@@ -97,12 +98,13 @@ export function ModalBook({ children, data }: Modal) {
 
           {showReviewFields && (
             <ReviewCard
+              bookId={data.id}
               showComponent={setShowReviewFields}
             />
           )}
 
           <RatingWrapper>
-            {data.ratings?.map(rating => {
+            {ratingSorted?.map(rating => {
               return (
                 <BookRatingCard key={rating.id}>
                   <BookRatingHeader>

@@ -27,6 +27,7 @@ export interface RatingProps {
 }
 
 export interface BookProps {
+  id: string
   author: string
   averageRating: number
   ratings?: RatingProps[]
@@ -39,6 +40,7 @@ export interface BookProps {
 }
 
 export function RatingCardMinimal({
+  id,
   author,
   averageRating,
   categories,
@@ -49,7 +51,7 @@ export function RatingCardMinimal({
   name,
   variant
 }: BookProps) {
-  const data = { author, averageRating, categories, ratings, countRating, cover, name, variant, totalPages }
+  const data = { author, averageRating, categories, ratings, countRating, cover, name, variant, totalPages, id }
 
   return (
     <ModalBook data={data}>
