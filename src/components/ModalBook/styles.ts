@@ -101,8 +101,18 @@ export const BookRatingCard = styled('div', {
   flexDirection: 'column',
   padding: '24px',
   gap: '20px',
-  backgroundColor: '$gray700',
   borderRadius: '$base',
+
+  variants: {
+    ownReview: {
+      true: {
+        backgroundColor: '$gray600',
+      },
+      false: {
+        backgroundColor: '$gray700',
+      }
+    }
+  },
 
   '& > p': {
     color: '$gray300',

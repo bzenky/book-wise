@@ -108,7 +108,7 @@ export function ModalBook({ children, data, refetch }: Modal) {
           <RatingWrapper>
             {ratingSorted?.map(rating => {
               return (
-                <BookRatingCard key={rating.id}>
+                <BookRatingCard key={rating.id} ownReview={rating.user_id === session.data?.user.id}>
                   <BookRatingHeader>
                     <Link href={`/profile/${rating.user_id}`}>
                       <Avatar

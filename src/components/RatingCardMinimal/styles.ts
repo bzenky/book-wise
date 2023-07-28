@@ -7,7 +7,12 @@ export const Card = styled('div', {
   gap: '$5',
   width: '100%',
   backgroundColor: '$gray700',
+  border: '2px solid $gray700',
   borderRadius: '$base',
+
+  '&:hover': {
+    borderColor: '$gray500',
+  },
 
   variants: {
     modal: {

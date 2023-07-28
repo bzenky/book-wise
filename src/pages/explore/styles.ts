@@ -45,6 +45,12 @@ export const FilterTag = styled('button', {
     color: '$gray100',
     borderColor: '$purple200',
     backgroundColor: '$purple200',
+  },
+
+  '&:hover': {
+    borderColor: '$purple100',
+    backgroundColor: '$purple200',
+    color: '$gray100',
   }
 })
 
