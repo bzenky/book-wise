@@ -6,16 +6,19 @@ import { Avatar } from "../Avatar"
 import { useSession } from "next-auth/react"
 import { api } from "@/lib/axios"
 import { ReviewRate } from "../ReviewRate"
+import { BookProps } from "../RatingCardMinimal"
 
 interface ReviewCardProps {
   showComponent: (value: boolean) => void
   bookId: String
+  refetch: () => Promise<BookProps[]>
 }
 
-export function ReviewCard({ showComponent, bookId }: ReviewCardProps) {
+export function ReviewCard({ showComponent, bookId, refetch }: ReviewCardProps) {
   const session = useSession()
   const [review, setReview] = useState('')
   const [reviewRate, setReviewRate] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const data = {
     book_id: bookId,
@@ -30,12 +33,16 @@ export function ReviewCard({ showComponent, bookId }: ReviewCardProps) {
   }
 
   async function handleSendReview() {
+    setIsLoading(true)
     try {
       await api.post('/ratings/rate', data)
-      setReview('')
-      setReviewRate(0)
+      refetch()
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
+      setReview('')
+      setReviewRate(0)
     }
   }
 
@@ -54,6 +61,7 @@ export function ReviewCard({ showComponent, bookId }: ReviewCardProps) {
           <ReviewRate
             averageRating={reviewRate}
             setAverageRating={setReviewRate}
+            disabled={isLoading}
           />
         </RatingStarWrapper>
       </Header>
@@ -63,6 +71,7 @@ export function ReviewCard({ showComponent, bookId }: ReviewCardProps) {
           maxLength={450}
           value={review}
           onChange={event => setReview(event.target.value)}
+          disabled={isLoading}
         />
 
         <span>{`${review.length}/450`}</span>
@@ -73,7 +82,7 @@ export function ReviewCard({ showComponent, bookId }: ReviewCardProps) {
           <X size={24} color={theme.colors.purple100 as unknown as string} />
         </ActionButton>
 
-        <ActionButton disabled={review.length === 0} onClick={handleSendReview}>
+        <ActionButton disabled={review.length === 0 || isLoading} onClick={handleSendReview}>
           <Check size={24} color={theme.colors.green100 as unknown as string} />
         </ActionButton>
       </ActionWrapper>

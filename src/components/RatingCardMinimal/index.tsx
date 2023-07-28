@@ -31,12 +31,14 @@ export interface BookProps {
   author: string
   averageRating: number
   ratings?: RatingProps[]
+  modal?: boolean
   countRating?: number
   totalPages?: number
   categories?: string
   cover: string
   name: string
   variant: 'small' | 'base'
+  refetch?: () => Promise<BookProps[]>
 }
 
 export function RatingCardMinimal({
@@ -49,13 +51,15 @@ export function RatingCardMinimal({
   totalPages,
   cover,
   name,
-  variant
+  variant,
+  modal = true,
+  refetch
 }: BookProps) {
   const data = { author, averageRating, categories, ratings, countRating, cover, name, variant, totalPages, id }
 
-  return (
-    <ModalBook data={data}>
-      <Card>
+  function content() {
+    return (
+      <Card modal={modal}>
         <BookCover
           src={cover}
           alt={`Capa do livro - ${name}`}
@@ -71,6 +75,18 @@ export function RatingCardMinimal({
           </RatingWrapper>
         </BookInfoWrapper>
       </Card>
-    </ModalBook>
+    )
+  }
+
+  return (
+    <>
+      {modal ? (
+        <ModalBook data={data} refetch={refetch}>
+          {content()}
+        </ModalBook>
+      ) : (
+        content()
+      )}
+    </>
   )
 }

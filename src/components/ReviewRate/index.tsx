@@ -5,9 +5,10 @@ import { Button, Container } from "./styles"
 interface Props {
   averageRating: number
   setAverageRating: (value: number) => void
+  disabled?: boolean
 }
 
-export function ReviewRate({ averageRating, setAverageRating }: Props) {
+export function ReviewRate({ averageRating, setAverageRating, disabled = false }: Props) {
   const floorAverage = Math.floor(averageRating)
   const stars = Array.apply(null, Array(5)).map(function (x, i) { return i })
 
@@ -23,7 +24,7 @@ export function ReviewRate({ averageRating, setAverageRating }: Props) {
     <Container>
       {stars.map(star => {
         return star < floorAverage ? (
-          <Button onClick={() => handleReviewRate(star)}>
+          <Button disabled={disabled} onClick={() => handleReviewRate(star)}>
             <Star
               key={star}
               size={24}
@@ -32,7 +33,7 @@ export function ReviewRate({ averageRating, setAverageRating }: Props) {
             />
           </Button>
         ) : (
-          <Button onClick={() => handleReviewRate(star)}>
+          <Button disabled={disabled} onClick={() => handleReviewRate(star)}>
             <Star
               key={star}
               size={24}

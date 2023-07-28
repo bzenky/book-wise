@@ -25,6 +25,7 @@ interface BookProps {
   name: string
   summary: string
   total_pages: number
+  refetch?: () => Promise<BookProps[]>
 }
 
 const Explore: NextPageWithLayout = () => {
@@ -161,6 +162,7 @@ const Explore: NextPageWithLayout = () => {
                   name={book.name}
                   totalPages={book.total_pages}
                   variant='base'
+                  refetch={fetchBooks as any}
                 />
               )
             })}

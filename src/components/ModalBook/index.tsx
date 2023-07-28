@@ -3,7 +3,6 @@ import { useSession } from 'next-auth/react'
 import { ReactNode, useState } from 'react'
 import * as Dialog from '@radix-ui/react-dialog'
 import { BookOpen, Bookmark, X } from 'lucide-react'
-import { BookProps } from '../RatingCardMinimal'
 import { renderRating } from '@/utils/renderRating'
 import { theme } from '@/styles/stitches.config'
 import { ModalLogin } from '../ModalLogin'
@@ -11,13 +10,15 @@ import { BookCard, BookInfo, BookRatingCard, BookRatingHeader, BookRatingTitleWr
 import { Avatar } from '../Avatar'
 import { dateDistanceToNow } from '@/utils/dateDistanceToNow'
 import { ReviewCard } from '../ReviewCard'
+import { BookProps } from '../RatingCardMinimal'
 
 interface Modal {
   children: ReactNode
   data: BookProps
+  refetch?: () => Promise<BookProps[]>
 }
 
-export function ModalBook({ children, data }: Modal) {
+export function ModalBook({ children, data, refetch }: Modal) {
   const [showReviewFields, setShowReviewFields] = useState(false)
   const [openLoginModal, setOpenLoginModal] = useState(false)
   const session = useSession()
@@ -96,10 +97,11 @@ export function ModalBook({ children, data }: Modal) {
             </button>
           </RatingTitleWrapper>
 
-          {showReviewFields && (
+          {showReviewFields && !!refetch && (
             <ReviewCard
               bookId={data.id}
               showComponent={setShowReviewFields}
+              refetch={refetch}
             />
           )}
 

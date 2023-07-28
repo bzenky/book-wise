@@ -135,6 +135,7 @@ const Dashboard: NextPageWithLayout = () => {
                     cover={book.cover_url}
                     name={book.name}
                     variant='small'
+                    modal={false}
                   />
                 )
               })}

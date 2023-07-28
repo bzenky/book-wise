@@ -8,7 +8,17 @@ export const Card = styled('div', {
   width: '100%',
   backgroundColor: '$gray700',
   borderRadius: '$base',
-  cursor: 'pointer',
+
+  variants: {
+    modal: {
+      true: {
+        cursor: 'pointer',
+      },
+      false: {
+        cursor: 'default',
+      }
+    }
+  }
 })
 
 export const BookCover = styled('img', {
