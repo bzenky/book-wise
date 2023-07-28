@@ -15,8 +15,18 @@ export default async function handler(
     },
     include: {
       ratings: true,
+      categories: true,
     },
     take: 4
+  })
+
+  const booksCategories = await prisma.category.groupBy({
+    by: ['id', 'name'],
+    where: {
+      id: {
+        in: popularBooks.map(book => book.categories.map(category => category.categoryId)).flat()
+      }
+    }
   })
 
   const booksAverageRating = await prisma.rating.groupBy({
@@ -39,6 +49,7 @@ export default async function handler(
 
   const popularBooksWithAverageRating = popularBooks.map(book => {
     const bookAverageRating = booksAverageRating.find(averageRating => averageRating.book_id === book.id)
+    const bookCategory = booksCategories.find(category => category.id === book.categories.map(category => category.categoryId).flat()[0])
     const { ratings, ...bookInfo } = book
 
     const ratingsWithUser = ratings.map(rating => {
@@ -49,6 +60,7 @@ export default async function handler(
       ...bookInfo,
       ratings: ratingsWithUser,
       averageRating: bookAverageRating?._avg?.rate,
+      category: bookCategory?.name
     }
   })
 

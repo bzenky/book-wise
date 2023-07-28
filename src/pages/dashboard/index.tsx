@@ -18,11 +18,16 @@ interface PopularBooksProps {
   ratings: RatingProps[]
   id: string
   name: string
+  total_pages: number
+  category: string
 }
 
 interface UserProps {
-  avatar_url: string
+  id: string
+  email: string
   name: string
+  avatar_url: string
+  created_at: string
 }
 
 interface BookProps {
@@ -49,6 +54,7 @@ export interface RatingProps {
   rate: number
   created_at: string
   description: string
+  book_id: string
   user_id: string
   user: UserProps
   book: BookProps
@@ -132,10 +138,14 @@ const Dashboard: NextPageWithLayout = () => {
                     id={book.id}
                     author={book.author}
                     averageRating={book.averageRating}
+                    ratings={book.ratings}
+                    categories={book.category}
+                    countRating={book.ratings.length}
                     cover={book.cover_url}
                     name={book.name}
+                    totalPages={book.total_pages}
                     variant='small'
-                    modal={false}
+                    refetch={popularBooks.refetch as any}
                   />
                 )
               })}

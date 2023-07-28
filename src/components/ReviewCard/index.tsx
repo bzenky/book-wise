@@ -36,11 +36,12 @@ export function ReviewCard({ showComponent, bookId, refetch }: ReviewCardProps) 
     setIsLoading(true)
     try {
       await api.post('/ratings/rate', data)
-      refetch()
+      await refetch()
     } catch (error) {
       console.log(error)
     } finally {
       setIsLoading(false)
+      showComponent(false)
       setReview('')
       setReviewRate(0)
     }

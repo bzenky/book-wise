@@ -24,7 +24,7 @@ export function ReviewRate({ averageRating, setAverageRating, disabled = false }
     <Container>
       {stars.map(star => {
         return star < floorAverage ? (
-          <Button disabled={disabled} onClick={() => handleReviewRate(star)}>
+          <Button key={star} disabled={disabled} onClick={() => handleReviewRate(star)}>
             <Star
               key={star}
               size={24}
@@ -33,7 +33,7 @@ export function ReviewRate({ averageRating, setAverageRating, disabled = false }
             />
           </Button>
         ) : (
-          <Button disabled={disabled} onClick={() => handleReviewRate(star)}>
+          <Button key={star} disabled={disabled} onClick={() => handleReviewRate(star)}>
             <Star
               key={star}
               size={24}
